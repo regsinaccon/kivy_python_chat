@@ -15,6 +15,7 @@ import threading
 
 client=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(('127.0.0.1',55555))
+my_name=""
 class SecondScreen(Screen):
     def __init__(self, **kwargs):
         super(SecondScreen, self).__init__(**kwargs)
@@ -57,7 +58,8 @@ class SecondScreen(Screen):
         self.mesg3.text = message3
     def send_data(self, instance):
         message = self.mes.text
-        client.send(message.encode("ascii"))
+        send_out_mesg=f'{my_name}: {message}'
+        client.send(send_out_mesg.encode("ascii"))
         self.mes.text = ''
 
 
@@ -86,13 +88,13 @@ class first(GridLayout, Screen):
         self.submit_button.bind(on_press=self.on_submit)
 
     def on_submit(self, instance):
-        
+        global my_name
         user_name=self.username.text
+        my_name=user_name
         client.send(user_name.encode("ascii"))        
 
         # Switching screens.
         self.manager.current = 'second'
-
 
 class Myapp(App):
     def build(self):
