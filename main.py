@@ -16,23 +16,27 @@ import threading
 client=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(('127.0.0.1',55555))
 my_name=""
+
+
 class SecondScreen(Screen):
     def __init__(self, **kwargs):
         super(SecondScreen, self).__init__(**kwargs)
         layout = BoxLayout(orientation='vertical')
-        self.mesg1=Label(font_size=40)
-        self.mesg2=Label(font_size=40)
-        self.mesg3=Label(font_size=40)
+        self.mesg1=Label(font_size=35)
+        self.mesg2=Label(font_size=35)
+        self.mesg3=Label(font_size=35)
         layout.add_widget(self.mesg1)
         layout.add_widget(self.mesg2)
         layout.add_widget(self.mesg3)
-        self.mes=TextInput(multiline=False)
-        layout.add_widget(self.mes)
 
-        self.send=Button(text="send",font_size=40)
+        write=BoxLayout(orientation='horizontal')
+        self.mes=TextInput(font_size=32)
+        write.add_widget(self.mes)
+
+        self.send=Button(text="send",font_size=40,size_hint=(0.3,1))
         self.send.bind(on_press=self.send_data)
-        
-        layout.add_widget(self.send)
+        write.add_widget(self.send)
+        layout.add_widget(write)
 
         self.add_widget(layout)
         # Start listening for data from the socket in a separate thread
@@ -72,7 +76,7 @@ class first(GridLayout, Screen):
         self.cols=1
 
         self.add_widget(Label(text="Choose a username",font_size=45))
-        self.username=TextInput(font_size=45)
+        self.username=TextInput(font_size=45,multiline=False)
         self.add_widget(self.username)
 
 
